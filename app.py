@@ -2,173 +2,179 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# --- Page Configuration (Browser Tab) ---
+# --- Configuração da Página ---
 st.set_page_config(
-    page_title="Data Insight Pro | Business Intelligence",
-    page_icon="📈",
+    page_title="Data Insight Pro | Premium Analytics",
+    page_icon="💎",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# --- CSS Styling (To make it look Professional) ---
+# --- CSS: Estilo "Black & Gold" (Luxo) ---
 st.markdown("""
 <style>
-    .main {
-        background-color: #f5f7f9;
+    /* Fundo Geral - Força o tom Escuro Profundo */
+    .stApp {
+        background-color: #0E1117;
+        color: #FAFAFA;
     }
-    .stApp > header {
-        background-color: transparent;
+    
+    /* Títulos em Dourado */
+    h1, h2, h3 {
+        color: #D4AF37 !important; 
+        font-family: 'Helvetica Neue', sans-serif;
+        font-weight: 600;
     }
-    .css-18e3th9 {
-        padding-top: 1rem; 
+    
+    /* Subtítulos e Texto Secundário em Prata */
+    .stMarkdown p, .caption {
+        color: #C0C0C0 !important;
     }
-    /* Metric Cards Styling */
+    
+    /* Cartões de Métricas (KPIs) - Estilo "Cartão Black" */
     div[data-testid="stMetric"] {
-        background-color: #ffffff;
-        border: 1px solid #e6e9ef;
+        background-color: #161920;
+        border: 1px solid #333;
+        border-left: 5px solid #D4AF37; /* Detalhe Dourado na borda */
         padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    
+    /* Valores das Métricas em Branco Brilhante */
+    div[data-testid="stMetricValue"] {
+        color: #FFFFFF !important;
+        font-weight: 700;
+    }
+    
+    /* Rótulos das Métricas em Dourado Fosco */
+    div[data-testid="stMetricLabel"] {
+        color: #D4AF37 !important;
+    }
+    
+    /* Botões e Widgets */
+    .stButton>button {
+        background-color: #D4AF37;
+        color: #000000;
+        border: none;
+        font-weight: bold;
+    }
+    .stButton>button:hover {
+        background-color: #F4CF57;
+        color: #000000;
+    }
+    
+    /* Ajuste da Sidebar */
+    section[data-testid="stSidebar"] {
+        background-color: #11141A;
+        border-right: 1px solid #333;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- Sidebar (Control Panel) ---
+# --- Barra Lateral ---
 with st.sidebar:
-    st.title("⚙️ Control Panel")
-    st.write("**Data Import**")
-    uploaded_file = st.file_uploader("Upload CSV or Excel file", type=["csv", "xlsx"])
+    st.title("💎 Control Panel")
+    st.markdown("---")
+    st.write("**Data Import Strategy**")
+    uploaded_file = st.file_uploader("Upload CSV or Excel Asset", type=["csv", "xlsx"])
     
     st.markdown("---")
-    st.write("**Settings**")
-    show_data_preview = st.toggle("Show Raw Data", value=True)
-    
-    st.markdown("---")
-    st.caption("v1.2.0 | Built by Rodrigo Niskier")
-    st.caption("© 2025 All Rights Reserved")
+    st.caption("Enterprise Edition v2.0")
+    st.caption("Developed by **Rodrigo Niskier**")
 
-# --- Main App Logic ---
-st.title("📈 Data Insight Pro")
-st.markdown("**Enterprise-Grade Data Analysis & Visualization Tool**")
+# --- Lógica Principal ---
+st.title("DATA INSIGHT PRO")
+st.markdown("**Premium Business Intelligence Solution**")
+st.markdown("---")
 
 if uploaded_file is not None:
-    # Load Data
     try:
+        # Carregamento Robusto
         if uploaded_file.name.endswith('.csv'):
             df = pd.read_csv(uploaded_file)
         else:
-            df = pd.read_excel(uploaded_file)
+            # O engine openpyxl é especificado aqui para garantir
+            df = pd.read_excel(uploaded_file, engine='openpyxl')
             
-        # --- TOP KPI SECTION (Business Value) ---
-        st.markdown("### 📊 Executive Summary")
+        # --- SEÇÃO DE KPIs (Cartões Pretos e Dourados) ---
+        st.subheader("📊 Executive Summary")
         
-        # Calculate dynamic metrics
+        col1, col2, col3, col4 = st.columns(4)
+        
+        # Lógica de Métricas
         total_rows = df.shape[0]
         total_cols = df.shape[1]
         
-        # Find numeric columns for smart insights
+        col1.metric("Total Records", f"{total_rows:,}")
+        col2.metric("Data Features", total_cols)
+        
         numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
         num_df = df.select_dtypes(include=numerics)
         
-        col1, col2, col3, col4 = st.columns(4)
-        col1.metric("Total Records", f"{total_rows:,}")
-        col1.caption("Rows processed")
-        
-        col2.metric("Data Dimensions", total_cols)
-        col2.caption("Columns analyzed")
-        
         if not num_df.empty:
-            # Smart Logic: Pick the last numeric column (often 'Total' or 'Profit')
-            primary_metric = num_df.columns[-1] 
+            primary_metric = num_df.columns[-1] # Pega a última coluna numérica (geralmente totais)
             total_val = num_df[primary_metric].sum()
-            avg_val = num_df[primary_metric].mean()
-            
             col3.metric(f"Total {primary_metric}", f"{total_val:,.2f}")
-            col4.metric(f"Avg {primary_metric}", f"{avg_val:,.2f}")
+            col4.metric(f"Avg {primary_metric}", f"{num_df[primary_metric].mean():,.2f}")
         else:
-            col3.metric("Numeric Data", "N/A")
-            col4.metric("Analysis", "Categorical Only")
+            col3.metric("Monetary Value", "N/A")
+            col4.metric("Growth Rate", "N/A")
 
         st.markdown("---")
 
-        # --- TABS LAYOUT (Clean Interface) ---
-        tab1, tab2, tab3 = st.tabs(["📈 Visualization Hub", "📋 Data Inspection", "📤 Export"])
+        # --- ÁREA DE ANÁLISE VISUAL ---
+        st.subheader("📈 Strategic Visualization")
+        
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            x_axis = st.selectbox("Dimension (X-Axis)", df.columns)
+        with c2:
+            y_axis = st.selectbox("Metric (Y-Axis)", num_df.columns if not num_df.empty else df.columns)
+        with c3:
+            chart_type = st.selectbox("Visualization Type", ["Bar Chart", "Line Chart", "Area Chart", "Scatter Plot"])
 
-        with tab1:
-            st.subheader("Dynamic Plotting Engine")
+        # Paleta de Cores Personalizada (Dourado e Prata)
+        custom_colors = ['#D4AF37', '#C0C0C0', '#A9A9A9', '#8B4513']
+        
+        # Configuração do Gráfico com Tema Escuro
+        if chart_type == "Bar Chart":
+            fig = px.bar(df, x=x_axis, y=y_axis, template="plotly_dark", color_discrete_sequence=custom_colors)
+        elif chart_type == "Line Chart":
+            fig = px.line(df, x=x_axis, y=y_axis, template="plotly_dark", color_discrete_sequence=custom_colors)
+        elif chart_type == "Area Chart":
+            fig = px.area(df, x=x_axis, y=y_axis, template="plotly_dark", color_discrete_sequence=custom_colors)
+        elif chart_type == "Scatter Plot":
+            fig = px.scatter(df, x=x_axis, y=y_axis, template="plotly_dark", color_discrete_sequence=custom_colors)
             
-            c1, c2, c3 = st.columns(3)
-            with c1:
-                x_axis = st.selectbox("X-Axis (Category)", df.columns, index=0)
-            with c2:
-                # Try to auto-select a numeric column for Y if possible
-                default_y = num_df.columns[0] if not num_df.empty else df.columns[1]
-                try:
-                    y_index = list(df.columns).index(default_y)
-                except:
-                    y_index = 0
-                y_axis = st.selectbox("Y-Axis (Value)", num_df.columns if not num_df.empty else df.columns, index=0)
-            with c3:
-                chart_type = st.selectbox("Chart Type", ["Bar Chart", "Line Chart", "Area Chart", "Scatter Plot", "Pie Chart"])
-
-            # Plotting Logic with English Titles
-            if chart_type == "Bar Chart":
-                fig = px.bar(df, x=x_axis, y=y_axis, title=f"{y_axis} by {x_axis}", template="plotly_white")
-            elif chart_type == "Line Chart":
-                fig = px.line(df, x=x_axis, y=y_axis, title=f"{y_axis} Trend", template="plotly_white")
-            elif chart_type == "Area Chart":
-                fig = px.area(df, x=x_axis, y=y_axis, title=f"{y_axis} Cumulative View", template="plotly_white")
-            elif chart_type == "Scatter Plot":
-                fig = px.scatter(df, x=x_axis, y=y_axis, title=f"Correlation: {x_axis} vs {y_axis}", template="plotly_white")
-            elif chart_type == "Pie Chart":
-                fig = px.pie(df, names=x_axis, values=y_axis, title=f"Distribution of {y_axis}", template="plotly_white")
-            
-            st.plotly_chart(fig, use_container_width=True)
-
-        with tab2:
-            if show_data_preview:
-                st.subheader("Raw Data Inspector")
-                st.dataframe(df, use_container_width=True)
-            else:
-                st.info("Data preview is hidden in settings.")
-
-        with tab3:
-            st.subheader("Download Reports")
-            st.write("Generate a clean CSV file for external reporting.")
-            csv = df.to_csv(index=False).encode('utf-8')
-            st.download_button(
-                label="📥 Download Processed CSV",
-                data=csv,
-                file_name='processed_data.csv',
-                mime='text/csv',
-            )
+        # Remove fundo do gráfico para mesclar com o site
+        fig.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
+        
+        st.plotly_chart(fig, use_container_width=True)
+        
+        # --- TABELA DE DADOS ---
+        with st.expander("📂 Inspect Raw Data Source"):
+            st.dataframe(df, use_container_width=True)
 
     except Exception as e:
-        st.error(f"Error processing file: {e}")
+        st.error(f"System Error: {e}")
 
 else:
-    # --- ZERO STATE (Professional Landing Page) ---
-    st.info("ℹ️ Please upload a CSV or Excel file from the sidebar to begin analysis.")
+    # --- TELA INICIAL (Landing Page de Luxo) ---
+    st.info("Waiting for data asset input via sidebar...")
     
-    st.subheader("Demo Preview")
-    st.markdown("Here is a sample of the automated insights generated by the platform:")
+    st.subheader("System Preview")
     
-    # Mock Data for English Demo
-    mock_data = pd.DataFrame({
-        'Quarter': ['Q1 - 2024', 'Q2 - 2024', 'Q3 - 2024', 'Q4 - 2024'],
-        'Revenue ($)': [150000, 230000, 180000, 320000],
-        'Growth (%)': [12, 18, -5, 25]
+    # Mock Data Visualmente Rico
+    mock = pd.DataFrame({
+        'Asset Class': ['Real Estate', 'Stocks', 'Bonds', 'Crypto'],
+        'Return (ROI)': [45000, 32000, 15000, 58000]
     })
     
-    c1, c2 = st.columns([2, 1])
+    fig_mock = px.bar(mock, x='Asset Class', y='Return (ROI)', 
+                      template="plotly_dark", 
+                      title="Portfolio Performance (Demo)",
+                      color_discrete_sequence=['#D4AF37']) # Apenas Dourado
     
-    with c1:
-        fig_demo = px.bar(mock_data, x='Quarter', y='Revenue ($)', 
-                          title="Quarterly Revenue Performance", 
-                          template="plotly_white", color='Revenue ($)')
-        st.plotly_chart(fig_demo, use_container_width=True)
-        
-    with c2:
-        st.write("#### Key Metrics")
-        st.metric("Total Revenue", "$880k", "24% vs last year")
-        st.metric("Top Quarter", "Q4 - 2024")
+    fig_mock.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
+    st.plotly_chart(fig_mock, use_container_width=True)
