@@ -1,31 +1,68 @@
-# 📊 Data Insight Pro | Enterprise Analytics Suite
+# Data Insight Pro
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.31-FF4B4B?style=for-the-badge&logo=streamlit)
-![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?style=for-the-badge&logo=pandas)
-![Plotly](https://img.shields.io/badge/Plotly-Visualization-3F4F75?style=for-the-badge&logo=plotly)
+### CSV/XLSX → análise exploratória e dashboards interativos
 
-## 🚀 Executive Summary
-**Data Insight Pro** is a high-performance Business Intelligence (BI) tool designed to democratize data analysis. It transforms raw Excel/CSV assets into interactive, executive-grade dashboards in seconds, eliminating the need for complex spreadsheet manipulation.
+**Data Insight Pro** é uma aplicação em Python que transforma planilhas e arquivos tabulares em uma visão exploratória pronta para análise.
 
-Built with a focus on **User Experience (UX)** and **Visual Hierarchy**, it features a custom "Onyx & Gold" high-contrast theme suitable for C-Level presentations.
+O objetivo é reduzir o trabalho manual necessário para abrir um conjunto de dados, identificar indicadores úteis e produzir visualizações interativas.
 
-## ✨ Key Features
-* **Instant ETL:** Automatic ingestion and cleaning of `.csv` and `.xlsx` files.
-* **Smart KPI Engine:** auto-detects numerical columns to generate executive summaries (Total Revenue, Averages, Growth).
-* **Dynamic Visualization:** User-controlled generation of Bar, Line, Area, and Scatter plots.
-* **Dark Mode Native:** Custom CSS engineering for reduced eye strain and premium aesthetic.
-* **Privacy First:** Data is processed in-memory and is not stored persistently.
+## Funcionalidades
 
-## 🛠️ Tech Stack
-* **Core:** Python 3.10+
-* **Frontend:** Streamlit (with Custom CSS Injection)
-* **Data Processing:** Pandas, OpenPyXL
-* **Visualization:** Plotly Express (Interactive Charts)
+- upload de arquivos `.csv` e `.xlsx`;
+- leitura e preparação dos dados com Pandas;
+- detecção de colunas numéricas;
+- geração automática de indicadores;
+- gráficos interativos;
+- filtros e exploração visual;
+- processamento em memória;
+- interface web com Streamlit.
 
-## ⚙️ Installation & Usage
+## Stack
 
-1. **Clone the repository**
-   ```bash
-   git clone [https://github.com/SEU-USUARIO/data-insight-pro.git](https://github.com/SEU-USUARIO/data-insight-pro.git)
-   cd data-insight-pro
+- **Python**
+- **Streamlit**
+- **Pandas**
+- **OpenPyXL**
+- **Plotly Express**
+
+## Executar localmente
+
+```bash
+git clone https://github.com/rodrigoniskier/data-insight-pro.git
+cd data-insight-pro
+
+python -m venv .venv
+source .venv/bin/activate   # Linux/macOS
+# .venv\Scripts\activate  # Windows
+
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+## Fluxo
+
+```text
+CSV / Excel
+    ↓
+Ingestão
+    ↓
+Preparação dos dados
+    ↓
+KPIs + estatísticas
+    ↓
+Visualizações interativas
+```
+
+## Privacidade
+
+O desenho da aplicação prioriza processamento durante a sessão, sem exigir uma base de dados permanente para os arquivos enviados.
+
+Para uso com dados sensíveis, a implantação deve ser revisada de acordo com as políticas de segurança e privacidade do ambiente em que estiver hospedada.
+
+## Por que este projeto está no portfólio
+
+Data Insight Pro mostra um fluxo completo e enxuto de **ingestão, transformação, análise e visualização de dados**, transformando tarefas que normalmente exigiriam várias etapas em planilhas em uma interface única.
+
+---
+
+Desenvolvido por [Rodrigo Niskier](https://github.com/rodrigoniskier).
