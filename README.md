@@ -16,7 +16,7 @@ O objetivo é reduzir o trabalho manual necessário para abrir um conjunto de da
 
 **Tecnologias.** Python, Pandas, Streamlit, Plotly Express, OpenPyXL.
 
-**Qualidade e evidências.** Projeto pequeno e focado; não há testes automatizados nem CI neste repositório.
+**Qualidade e evidências.** Projeto pequeno e focado; não há testes automatizados. O CI (`ci.yml`) instala as dependências e verifica a sintaxe de `app.py` a cada push e pull request. Licença MIT.
 
 ## Funcionalidades
 
