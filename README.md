@@ -6,6 +6,18 @@
 
 O objetivo é reduzir o trabalho manual necessário para abrir um conjunto de dados, identificar indicadores úteis e produzir visualizações interativas.
 
+## Problema, público e resultado
+
+**Problema.** Abrir uma planilha desconhecida e descobrir quais indicadores e padrões ela contém exige trabalho manual repetitivo.
+
+**Para quem.** Analistas, gestores e estudantes que recebem arquivos CSV ou Excel e precisam de uma primeira leitura rápida dos dados (hipótese de desenho, não validada com usuários).
+
+**O que entrega.** Envio de arquivos `.csv` e `.xlsx`, preparação dos dados, detecção de colunas numéricas, indicadores automáticos e gráficos interativos com filtros, tudo processado em memória durante a sessão.
+
+**Tecnologias.** Python, Pandas, Streamlit, Plotly Express, OpenPyXL.
+
+**Qualidade e evidências.** Projeto pequeno e focado; não há testes automatizados nem CI neste repositório.
+
 ## Funcionalidades
 
 - upload de arquivos `.csv` e `.xlsx`;
